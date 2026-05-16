@@ -71,27 +71,27 @@ smote = SMOTE(random_state=42)
 X_train, y_train = smote.fit_resample(X_train, y_train)
 
 
-# Model
+# RANDOM FOREST
 
-model = RandomForestClassifier(
+rf = RandomForestClassifier(
     n_estimators=200,
     max_depth=6,
     random_state=42
 )
 
-model.fit(X_train, y_train)
+rf.fit(X_train, y_train)
 
 
 # Prediction
 
-y_pred = model.predict(X_test)
+y_pred = rf.predict(X_test)
 
 
 # Evaluation
 
-print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Accuracy Random Forest:", accuracy_score(y_test, y_pred))
 
-print("\nClassification Report:\n")
+print("\nClassification Report Random Forest:\n")
 
 print(classification_report(y_test, y_pred))
 
@@ -101,7 +101,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 
 # XGBoost Model
 
-model = XGBClassifier(
+xgb = XGBClassifier(
     n_estimators=300,
     learning_rate=0.05,
     max_depth=6,
@@ -114,30 +114,26 @@ model = XGBClassifier(
 
 # Train model
 
-model.fit(X_train, y_train)
+xgb.fit(X_train, y_train)
 
 # Prediction
 
-y_pred = model.predict(X_test)
+y_pred = xgb.predict(X_test)
 
 # Accuracy
 
 accuracy = accuracy_score(y_test, y_pred)
 
-print("Accuracy:", accuracy)
+print("Accuracy XGBoost:", accuracy)
 
 # Classification Report
 
-print("\nClassification Report:\n")
+print("\nClassification Report XGBoost:\n")
 print(classification_report(y_test, y_pred))
 
-# Confusion Matrix
-
-print("\nConfusion Matrix:\n")
-print(confusion_matrix(y_test, y_pred))
 
 
 # Save model
 
-joblib.dump(model, "models/churn_model.pkl")
+joblib.dump(rf, "models/churn_model.pkl")
 joblib.dump(scaler, "models/scaler.pkl")
